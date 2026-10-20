@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillNova - Free Global Humanitarian Skill & Education Platform</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#FDFBF7',
+                        creamDark: '#F4EFEA',
+                        sand: '#EAE2D5',
+                        brandGreen: '#16A34A',
+                        brandDark: '#1E293B',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #FDFBF7;
+            color: #1E293B;
+            position: relative;
+            min-height: 100vh;
+        }
+        /* Background underprivileged children education theme with overlay */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(rgba(253, 251, 247, 0.92), rgba(253, 251, 247, 0.94)), url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1920&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(234, 226, 213, 0.6);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+        .glass-nav {
+            background: rgba(253, 251, 247, 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(234, 226, 213, 0.5);
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+    </style>
+</head>
+<body class="selection:bg-green-100 selection:text-green-800">
+
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('home')">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-green-600 to-emerald-500 flex items-center justify-center text-white shadow-lg shadow-green-600/20">
+                    <i class="fa-solid fa-hands-holding-child text-2xl"></i>
+                </div>
+                <div>
+                    <span class="text-2xl font-extrabold bg-gradient-to-r from-green-700 to-emerald-600 bg-clip-text text-transparent">SkillNova</span>
+                    <span class="block text-xs font-semibold text-stone-500 tracking-wider">Free Global Education</span>
+                </div>
+            </div>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center space-x-8 font-medium text-stone-700">
+                <button onclick="switchTab('home')" class="nav-btn hover:text-green-600 transition text-green-600 font-semibold" data-target="home">Home</button>
+                <button onclick="switchTab('explore')" class="nav-btn hover:text-green-600 transition" data-target="explore">Courses & Videos</button>
+                <button onclick="switchTab('library')" class="nav-btn hover:text-green-600 transition" data-target="library">Free PDFs</button>
+                <button onclick="switchTab('certificate')" class="nav-btn hover:text-green-600 transition" data-target="certificate">Certificates</button>
+                <button onclick="switchTab('donate')" class="nav-btn hover:text-green-600 transition text-amber-700 font-bold flex items-center gap-1.5"><i class="fa-solid fa-heart"></i> Donate</button>
+            </nav>
+
+            <!-- Auth / Profile Buttons -->
+            <div class="flex items-center space-x-3" id="authNavArea">
+                <button onclick="openAuthModal('student')" class="px-4 py-2 text-sm font-semibold text-green-700 bg-green-50 border border-green-200 rounded-xl hover:bg-green-100 transition shadow-sm">
+                    <i class="fa-solid fa-user-graduate mr-1"></i> Student
+                </button>
+                <button onclick="openAuthModal('tutor')" class="px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-green-600 to-emerald-600 rounded-xl hover:from-green-700 hover:to-emerald-700 transition shadow-md shadow-green-600/20">
+                    <i class="fa-solid fa-chalkboard-user mr-1"></i> Tutor
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- HOME TAB -->
+        <div id="home" class="tab-content active space-y-12">
+            <!-- Hero Section -->
+            <div class="glass-card rounded-3xl p-8 md:p-12 text-center relative overflow-hidden">
+                <div class="absolute -right-20 -top-20 w-80 h-80 bg-green-200 rounded-full blur-3xl opacity-30 pointer-events-none"></div>
+                <div class="absolute -left-20 -bottom-20 w-80 h-80 bg-amber-100 rounded-full blur-3xl opacity-30 pointer-events-none"></div>
+                
+                <span class="inline-block px-4 py-1.5 mb-6 text-xs font-bold uppercase tracking-wider text-green-800 bg-green-100/80 rounded-full border border-green-200">
+                    <i class="fa-solid fa-globe mr-1.5"></i> 100% Free Education for Underprivileged Children & All Learners
+                </span>
+                <h1 class="text-4xl md:text-6xl font-extrabold text-stone-900 tracking-tight leading-tight max-w-4xl mx-auto mb-6">
+                    Empowering Every Child with <span class="bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">Free Knowledge</span> & Skills
+                </h1>
+                <p class="text-lg md:text-xl text-stone-600 max-w-2xl mx-auto mb-8 font-medium">
+                    SkillNova connects passionate humanitarian tutors with eager students worldwide. Learn academic subjects or practical vocational skills completely free, earn verifiable certificates, and build your digital future.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <button onclick="switchTab('explore')" class="px-8 py-4 bg-green-600 hover:bg-green-700 text-white font-bold rounded-2xl shadow-lg shadow-green-600/30 transition transform hover:-translate-y-0.5">
+                        <i class="fa-solid fa-graduation-cap mr-2"></i> Start Learning Free
+                    </button>
+                    <button onclick="openAuthModal('tutor')" class="px-8 py-4 bg-stone-900 hover:bg-stone-800 text-white font-bold rounded-2xl shadow-lg transition transform hover:-translate-y-0.5">
+                        <i class="fa-solid fa-hands-bound mr-2"></i> Join as Humanitarian Tutor
+                    </button>
+                </div>
+
+                <!-- Impact Stats Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 pt-12 border-t border-stone-200/60">
+                    <div class="text-center">
+                        <div class="text-3xl md:text-4xl font-extrabold text-green-700 mb-1" id="statStudents">14,250+</div>
+                        <div class="text-sm font-semibold text-stone-500">Active Students</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl md:text-4xl font-extrabold text-green-700 mb-1" id="statTutors">1,820+</div>
+                        <div class="text-sm font-semibold text-stone-500">Humanitarian Tutors</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl md:text-4xl font-extrabold text-green-700 mb-1">450+</div>
+                        <div class="text-sm font-semibold text-stone-500">Free Video Lessons</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl md:text-4xl font-extrabold text-green-700 mb-1">100%</div>
+                        <div class="text-sm font-semibold text-stone-500">Free & Non-Profit</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categories Section -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Academic Education -->
+                <div class="glass-card rounded-3xl p-8 hover:shadow-xl transition border-l-4 border-l-green-600">
+                    <div class="w-14 h-14 rounded-2xl bg-green-100 flex items-center justify-center text-green-700 mb-6 text-2xl">
+                        <i class="fa-solid fa-book-open"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-stone-900 mb-3">Academic Subjects</h3>
+                    <p class="text-stone-600 mb-6 font-medium">Comprehensive lessons covering school and college curriculum including Mathematics, Physics, Chemistry, Biology, English Literature, and ICT.</p>
+                    <ul class="space-y-2.5 mb-8 text-stone-700 font-medium">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-green-600"></i> Primary & Secondary Math Curriculum</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-green-600"></i> Science Experiments & Theory</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-green-600"></i> Spoken English & Grammar</li>
+                    </ul>
+                    <button onclick="switchTab('explore')" class="w-full py-3 bg-green-50 hover:bg-green-100 text-green-700 font-bold rounded-xl transition">Explore Academic Courses</button>
+                </div>
+
+                <!-- Vocational Skills -->
+                <div class="glass-card rounded-3xl p-8 hover:shadow-xl transition border-l-4 border-l-amber-600">
+                    <div class="w-14 h-14 rounded-2xl bg-amber-100 flex items-center justify-center text-amber-700 mb-6 text-2xl">
+                        <i class="fa-solid fa-hammer"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-stone-900 mb-3">Vocational & Technical Skills</h3>
+                    <p class="text-stone-600 mb-6 font-medium">Practical hands-on training designed to empower underprivileged youth with immediate livelihood skills such as mobile repair, web design, and sewing.</p>
+                    <ul class="space-y-2.5 mb-8 text-stone-700 font-medium">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-amber-600"></i> Mobile Repair & Electronics</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-amber-600"></i> Basic Web Design & ICT</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-amber-600"></i> Tailoring, Sewing & Handicrafts</li>
+                    </ul>
+                    <button onclick="switchTab('explore')" class="w-full py-3 bg-amber-50 hover:bg-amber-100 text-amber-700 font-bold rounded-xl transition">Explore Vocational Skills</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXPLORE / VIDEOS TAB -->
+        <div id="explore" class="tab-content space-y-8">
+            <div class="glass-card rounded-3xl p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+                <div>
+                    <h2 class="text-3xl font-extrabold text-stone-900 mb-2">Free Video Learning Hub</h2>
+                    <p class="text-stone-600 font-medium">Watch high-quality video lessons uploaded by certified humanitarian tutors.</p>
+                </div>
+                <div class="flex flex-wrap gap-3 w-full md:w-auto">
+                    <input type="text" id="videoSearch" placeholder="Search lessons..." onkeyup="filterVideos()" class="px-4 py-2.5 rounded-xl border border-stone-300 bg-white/80 focus:outline-none focus:ring-2 focus:ring-green-600 text-sm w-full md:w-64">
+                    <select id="videoCategoryFilter" onchange="filterVideos()" class="px-4 py-2.5 rounded-xl border border-stone-300 bg-white/80 focus:outline-none focus:ring-2 focus:ring-green-600 text-sm">
+                        <option value="all">All Categories</option>
+                        <option value="Academic">Academic</option>
+                        <option value="Vocational">Vocational</option>
+                        <option value="Language">Language</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Video Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="videoGrid">
+                <!-- Dynamically rendered videos -->
+            </div>
+        </div>
+
+        <!-- FREE PDF LIBRARY TAB -->
+        <div id="library" class="tab-content space-y-8">
+            <div class="glass-card rounded-3xl p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+                <div>
+                    <h2 class="text-3xl font-extrabold text-stone-900 mb-2">Free PDF & Book Library</h2>
+                    <p class="text-stone-600 font-medium">Download study guides, vocational manuals, and worksheets for 100% free.</p>
+                </div>
+                <div class="w-full md:w-auto">
+                    <input type="text" id="pdfSearch" placeholder="Search books & PDFs..." onkeyup="filterPdfs()" class="px-4 py-2.5 rounded-xl border border-stone-300 bg-white/80 focus:outline-none focus:ring-2 focus:ring-green-600 text-sm w-full md:w-64">
+                </div>
+            </div>
+
+            <!-- PDF Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="pdfGrid">
+                <!-- Dynamically rendered PDFs -->
+            </div>
+        </div>
+
+        <!-- CERTIFICATE TAB -->
+        <div id="certificate" class="tab-content space-y-8">
+            <div class="glass-card rounded-3xl p-8 text-center max-w-3xl mx-auto">
+                <h2 class="text-3xl font-extrabold text-stone-900 mb-3">Claim Your Completion Certificate</h2>
+                <p class="text-stone-600 mb-8 font-medium">Successfully completed a course or skill training? Enter your details below to generate your official verified SkillNova Humanitarian Certificate.</p>
+                
+                <form onsubmit="generateCertificate(event)" class="space-y-4 text-left">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-bold text-stone-700 mb-1">Full Name</label>
+                            <input type="text" id="certName" required placeholder="e.g., Sadia Islam" class="w-full px-4 py-3 rounded-xl border border-stone-300 bg-white/90 focus:outline-none focus:ring-2 focus:ring-green-600">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-stone-700 mb-1">Course / Skill Name</label>
+                            <select id="certCourse" class="w-full px-4 py-3 rounded-xl border border-stone-300 bg-white/90 focus:outline-none focus:ring-2 focus:ring-green-600">
+                                <option value="Basic Mathematics & Algebra">Basic Mathematics & Algebra</option>
+                                <option value="Mobile Phone Hardware Repairing">Mobile Phone Hardware Repairing</option>
+                                <option value="Spoken English & Communication">Spoken English & Communication</option>
+                                <option value="Tailoring & Dress Making">Tailoring & Dress Making</option>
+                                <option value="Fundamental Web Design & HTML">Fundamental Web Design & HTML</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="w-full py-4 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl shadow-lg transition">Generate Official Certificate</button>
+                </form>
+
+                <div id="certPreviewArea" class="mt-8 hidden">
+                    <div id="printableCertificate" class="bg-white border-8 border-double border-green-800 p-8 rounded-2xl shadow-2xl text-center relative overflow-hidden">
+                        <div class="absolute top-4 left-4 text-green-700 font-bold text-xs">SKILLNOVA HUMANITARIAN INITIATIVE</div>
+                        <div class="absolute top-4 right-4 text-stone-400 font-mono text-xs" id="certIdDisplay">SN-CERT-94821</div>
+                        <div class="my-6">
+                            <i class="fa-solid fa-award text-5xl text-amber-500 mb-2"></i>
+                            <h3 class="text-3xl font-extrabold text-stone-900 tracking-wider">CERTIFICATE OF COMPLETION</h3>
+                            <p class="text-xs font-semibold text-stone-500 uppercase tracking-widest mt-1">This is proudly presented to</p>
+                        </div>
+                        <h4 class="text-2xl font-bold text-green-700 border-b-2 border-stone-200 pb-2 inline-block px-8 mb-4" id="certRecipientName">Recipient Name</h4>
+                        <p class="text-stone-600 text-sm max-w-lg mx-auto mb-6">For successfully completing the free humanitarian education course in <strong id="certCourseDisplay" class="text-stone-800">Course Name</strong> with dedication and excellence.</p>
+                        <div class="flex justify-between items-center mt-12 pt-6 border-t border-stone-200 text-xs font-semibold text-stone-600">
+                            <div>Date: <span id="certDateDisplay">2026-06-06</span></div>
+                            <div class="text-center">
+                                <div class="font-serif italic text-base text-stone-800">Dr. Al Amin</div>
+                                <div class="text-[10px] text-stone-500">Director, SkillNova Foundation</div>
+                            </div>
+                            <div>Status: <span class="text-green-600 font-bold">Verified Free</span></div>
+                        </div>
+                    </div>
+                    <button onclick="window.print()" class="mt-6 px-6 py-3 bg-stone-900 hover:bg-stone-800 text-white font-bold rounded-xl shadow transition">
+                        <i class="fa-solid fa-print mr-2"></i> Print / Download Certificate PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- DONATE TAB -->
+        <div id="donate" class="tab-content space-y-8">
+            <div class="glass-card rounded-3xl p-8 md:p-12 max-w-3xl mx-auto">
+                <div class="text-center mb-8">
+                    <span class="px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-amber-800 bg-amber-100 rounded-full border border-amber-200">
+                        <i class="fa-solid fa-heart mr-1.5 text-red-600"></i> Support Free Education
+                    </span>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-stone-900 mt-4 mb-3">Contribute to Underprivileged Children</h2>
+                    <p class="text-stone-600 font-medium">SkillNova is 100% free and non-profit. Your donation helps us provide digital devices, internet connectivity, and learning materials to underprivileged children in rural areas.</p>
+                </div>
+
+                <div class="grid grid-cols-3 gap-4 mb-6">
+                    <button onclick="setDonationAmount(10)" class="donation-btn py-3 px-4 rounded-xl border border-stone-300 font-bold text-stone-800 hover:bg-green-50 hover:border-green-600 transition">$10 (BDT 1,200)</button>
+                    <button onclick="setDonationAmount(25)" class="donation-btn py-3 px-4 rounded-xl border-2 border-green-600 bg-green-50 font-bold text-green-800 transition">$25 (BDT 3,000)</button>
+                    <button onclick="setDonationAmount(50)" class="donation-btn py-3 px-4 rounded-xl border border-stone-300 font-bold text-stone-800 hover:bg-green-50 hover:border-green-600 transition">$50 (BDT 6,000)</button>
+                </div>
+
+                <form onsubmit="handleDonation(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-bold text-stone-700 mb-1">Custom Amount ($ USD)</label>
+                        <input type="number" id="customDonation" value="25" min="1" required class="w-full px-4 py-3 rounded-xl border border-stone-300 bg-white/90 focus:outline-none focus:ring-2 focus:ring-green-600">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-stone-700 mb-1">Donor Full Name</label>
+                        <input type="text" id="donorName" placeholder="Your Name or Anonymous" class="w-full px-4 py-3 rounded-xl border border-stone-300 bg-white/90 focus:outline-none focus:ring-2 focus:ring-green-600">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-stone-700 mb-1">Payment Method</label>
+                        <select class="w-full px-4 py-3 rounded-xl border border-stone-300 bg-white/90 focus:outline-none focus:ring-2 focus:ring-green-600">
+                            <option value="bkash">bKash / Nagad (Bangladesh)</option>
+                            <option value="card">Credit / Debit Card (Visa/Mastercard)</option>
+                            <option value="paypal">PayPal / International Transfer</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="w-full py-4 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl shadow-lg transition">
+                        <i class="fa-solid fa-heart mr-2"></i> Complete Secure Donation
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- STUDENT DASHBOARD TAB -->
+        <div id="studentDashboard" class="tab-content space-y-8">
+            <div class="glass-card rounded-3xl p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex items-center space-x-4">
+                    <div id="stuAvatar" class="w-16 h-16 rounded-2xl bg-green-600 text-white flex items-center justify-center text-2xl font-bold shadow-md">S</div>
+                    <div>
+                        <h2 class="text-2xl font-extrabold text-stone-900" id="stuNameDisplay">Student Name</h2>
+                        <p class="text-sm font-semibold text-green-700" id="stuIdDisplay">ID: SN-STU-10001</p>
+                    </div>
+                </div>
+                <div class="flex gap-3">
+                    <button onclick="openIdCardModal('student')" class="px-5 py-2.5 bg-stone-900 hover:bg-stone-800 text-white font-bold rounded-xl shadow transition text-sm">
+                        <i class="fa-solid fa-id-card mr-2"></i> Download ID Card
+                    </button>
+                    <button onclick="logout()" class="px-5 py-2.5 bg-red-50 hover:bg-red-100 text-red-700 font-bold rounded-xl transition text-sm border border-red-200">
+                        <i class="fa-solid fa-right-from-bracket mr-2"></i> Logout
+                    </button>
+                </div>
+            </div>
+
+            <!-- Student Enrolled & Progress -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="glass-card rounded-3xl p-8">
+                    <h3 class="text-xl font-bold text-stone-900 mb-4"><i class="fa-solid fa-book-bookmark text-green-600 mr-2"></i> My Enrolled Courses</h3>
+                    <div class="space-y-4" id="stuEnrolledList">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+                <div class="glass-card rounded-3xl p-8">
+                    <h3 class="text-xl font-bold text-stone-900 mb-4"><i class="fa-solid fa-award text-amber-600 mr-2"></i> My Earned Certificates</h3>
+                    <div class="space-y-4" id="stuCertList">
+                        <div class="p-4 rounded-xl bg-white/70 border border-stone-200 flex items-center justify-between">
+                            <div>
+                                <h4 class="font-bold text-stone-800 text-sm">Basic Mathematics & Algebra</h4>
+                                <p class="text-xs text-stone-500">Issued: June 2026</p>
+                            </div>
+                            <button onclick="switchTab('certificate')" class="px-3 py-1.5 bg-green-600 text-white text-xs font-bold rounded-lg">View</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TUTOR DASHBOARD TAB -->
+        <div id="tutorDashboard" class="tab-content space-y-8">
+            <div class="glass-card rounded-3xl p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex items-center space-x-4">
+                    <div id="ttrAvatar" class="w-16 h-16 rounded-2xl bg-amber-600 text-white flex items-center justify-center text-2xl font-bold shadow-md">T</div>
+                    <div>
+                        <h2 class="text-2xl font-extrabold text-stone-900" id="ttrNameDisplay">Tutor Name</h2>
+                        <p class="text-sm font-semibold text-amber-700" id="ttrIdDisplay">ID: SN-TTR-50001</p>
+                    </div>
+                </div>
+                <div class="flex gap-3">
+                    <button onclick="openIdCardModal('tutor')" class="px-5 py-2.5 bg-stone-900 hover:bg-stone-800 text-white font-bold rounded-xl shadow transition text-sm">
+                        <i class="fa-solid fa-id-card mr-2"></i> Download ID Card
+                    </button>
+                    <button onclick="logout()" class="px-5 py-2.5 bg-red-50 hover:bg-red-100 text-red-700 font-bold rounded-xl transition text-sm border border-red-200">
+                        <i class="fa-solid fa-right-from-bracket mr-2"></i> Logout
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tutor Upload Section -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="glass-card rounded-3xl p-8">
+                    <h3 class="text-xl font-bold text-stone-900 mb-4"><i class="fa-solid fa-video text-green-600 mr-2"></i> Publish Free Video Lesson</h3>
+                    <form onsubmit="publishVideo(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-stone-700 mb-1">Lesson Title</label>
+                            <input type="text" id="newVideoTitle" required placeholder="e.g., Introduction to Fractions" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 bg-white/90 text-sm">
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-bold text-stone-700 mb-1">Category</label>
+                                <select id="newVideoCat" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 bg-white/90 text-sm">
+                                    <option value="Academic">Academic</option>
+                                    <option value="Vocational">Vocational</option>
+                                    <option value="Language">Language</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-stone-700 mb-1">YouTube Video ID / URL</label>
+                                <input type="text" id="newVideoUrl" required placeholder="e.g., dQw4w9WgXcQ" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 bg-white/90 text-sm">
+                            </div>
+                        </div>
+                        <button type="submit" class="w-full py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl text-sm shadow">Publish Video for Students</button>
+                    </form>
+                </div>
+
+                <div class="glass-card rounded-3xl p-8">
+                    <h3 class="text-xl font-bold text-stone-900 mb-4"><i class="fa-solid fa-file-pdf text-amber-600 mr-2"></i> Upload Free PDF Guide</h3>
+                    <form onsubmit="publishPdf(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-stone-700 mb-1">PDF / E-Book Title</label>
+                            <input type="text" id="newPdfTitle" required placeholder="e.g., Basic Electronics Wiring Guide" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 bg-white/90 text-sm">
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-bold text-stone-700 mb-1">Subject / Field</label>
+                                <input type="text" id="newPdfSub" required placeholder="e.g., Vocational" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 bg-white/90 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-stone-700 mb-1">PDF Download Link</label>
+                                <input type="text" id="newPdfLink" required placeholder="https://example.com/guide.pdf" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 bg-white/90 text-sm">
+                            </div>
+                        </div>
+                        <button type="submit" class="w-full py-3 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl text-sm shadow">Publish PDF Resource</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- AUTH MODAL -->
+    <div id="authModal" class="fixed inset-0 z-50 bg-stone-900/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="glass-card rounded-3xl p-8 max-w-md w-full relative">
+            <button onclick="closeAuthModal()" class="absolute top-6 right-6 text-stone-400 hover:text-stone-700"><i class="fa-solid fa-xmark text-xl"></i></button>
+            <div class="text-center mb-6">
+                <h3 id="authModalTitle" class="text-2xl font-extrabold text-stone-900">Student Portal</h3>
+                <p class="text-xs text-stone-500 font-semibold mt-1">Free Humanitarian Access</p>
+            </div>
+
+            <!-- Mode selector: Login vs Register -->
+            <div class="flex bg-stone-200/60 p-1 rounded-xl mb-6">
+                <button onclick="switchAuthMode('login')" id="authTabLogin" class="flex-1 py-2 text-xs font-bold rounded-lg bg-white shadow-sm text-stone-800 transition">Login</button>
+                <button onclick="switchAuthMode('register')" id="authTabRegister" class="flex-1 py-2 text-xs font-bold rounded-lg text-stone-500 transition">Register</button>
+            </div>
+
+            <form id="authForm" onsubmit="handleAuth(event)" class="space-y-4">
+                <div id="registerFields" class="hidden space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-stone-700 mb-1">Full Name</label>
+                        <input type="text" id="authName" placeholder="e.g. Rahim Ahmed" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 bg-white/90 text-sm">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-stone-700 mb-1">Unique ID or Email</label>
+                    <input type="text" id="authEmail" required placeholder="e.g. SN-STU-10001" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 bg-white/90 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-stone-700 mb-1">Password</label>
+                    <input type="password" id="authPass" required placeholder="••••••••" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 bg-white/90 text-sm">
+                </div>
+                <button type="submit" id="authSubmitBtn" class="w-full py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl text-sm shadow">Login to Portal</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ID CARD MODAL -->
+    <div id="idCardModal" class="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="glass-card rounded-3xl p-6 max-w-sm w-full text-center relative">
+            <button onclick="closeIdCardModal()" class="absolute top-4 right-4 text-stone-400 hover:text-stone-700"><i class="fa-solid fa-xmark text-lg"></i></button>
+            
+            <!-- Printable ID Card Design -->
+            <div id="printableIdCard" class="bg-gradient-to-br from-white to-green-50/50 border-2 border-green-700 rounded-2xl p-6 shadow-xl text-left relative overflow-hidden my-4">
+                <div class="flex items-center justify-between border-b border-green-200 pb-3 mb-4">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 rounded-lg bg-green-600 flex items-center justify-center text-white text-sm font-bold">SN</div>
+                        <div>
+                            <h4 class="font-extrabold text-stone-900 text-sm">SKILLNOVA</h4>
+                            <p class="text-[9px] text-green-700 font-semibold">GLOBAL HUMANITARIAN ID</p>
+                        </div>
+                    </div>
+                    <span id="idCardRoleBadge" class="px-2 py-0.5 bg-green-100 text-green-800 text-[10px] font-bold rounded">STUDENT</span>
+                </div>
+                <div class="flex items-center space-x-4 mb-4">
+                    <div id="idCardAvatar" class="w-16 h-16 rounded-xl bg-green-700 text-white flex items-center justify-center text-2xl font-bold shadow">S</div>
+                    <div>
+                        <h3 class="font-bold text-stone-900 text-base" id="idCardName">User Name</h3>
+                        <p class="text-xs font-mono font-bold text-green-700 mt-0.5" id="idCardNumber">SN-STU-10001</p>
+                        <p class="text-[10px] text-stone-500 mt-1">Issued: 2026-06-06</p>
+                    </div>
+                </div>
+                <div class="bg-green-800 text-white p-2 rounded-xl text-center text-[10px] font-semibold tracking-wider">
+                    FREE EDUCATION FOR ALL
+                </div>
+            </div>
+
+            <button onclick="window.print()" class="w-full py-2.5 bg-stone-900 hover:bg-stone-800 text-white font-bold rounded-xl text-sm shadow">
+                <i class="fa-solid fa-download mr-1"></i> Download ID Card PNG
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Initial Mock Data
+        let videos = [
+            { id: 1, title: "Basic Algebra & Linear Equations", category: "Academic", url: "https://www.youtube.com/embed/dQw4w9WgXcQ", tutor: "Dr. Al Amin", duration: "18 mins" },
+            { id: 2, title: "Mobile Phone Charging Port & Display Replacement", category: "Vocational", url: "https://www.youtube.com/embed/dQw4w9WgXcQ", tutor: "Engr. Farhan", duration: "25 mins" },
+            { id: 3, title: "Spoken English for Beginners - Daily Conversation", category: "Language", url: "https://www.youtube.com/embed/dQw4w9WgXcQ", tutor: "Sarah Jenkins", duration: "15 mins" }
+        ];
+
+        let pdfs = [
+            { id: 1, title: "Complete Mathematics Formula Guide (Class 6-10)", subject: "Academic", link: "#" },
+            { id: 2, title: "Basic Mobile Repairing Manual & Circuit Diagrams", subject: "Vocational", link: "#" },
+            { id: 3, title: "English Grammar Rules & Vocabulary Handbook", subject: "Language", link: "#" }
+        ];
+
+        let currentUser = JSON.parse(localStorage.getItem('skillnova_user')) || null;
+        let currentAuthRole = 'student';
+        let authMode = 'login';
+
+        // Initialize App State on Load
+        window.addEventListener('DOMContentLoaded', () => {
+            renderVideos(videos);
+            renderPdfs(pdfs);
+            checkUserSession();
+        });
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('text-green-600', 'font-semibold'));
+            
+            const target = document.getElementById(tabId);
+            if (target) target.classList.add('active');
+
+            const btn = document.querySelector(`[data-target="${tabId}"]`);
+            if (btn) btn.classList.add('text-green-600', 'font-semibold');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Render Videos
+        function renderVideos(list) {
+            const grid = document.getElementById('videoGrid');
+            if (!grid) return;
+            grid.innerHTML = list.map(v => `
+                <div class="glass-card rounded-2xl overflow-hidden hover:shadow-xl transition flex flex-col">
+                    <div class="bg-stone-900 aspect-video flex items-center justify-center text-white relative">
+                        <i class="fa-solid fa-play-circle text-5xl text-green-500 cursor-pointer hover:scale-110 transition"></i>
+                        <span class="absolute bottom-2 right-2 bg-stone-900/80 text-white text-[10px] font-bold px-2 py-0.5 rounded">${v.duration}</span>
+                        <span class="absolute top-2 left-2 bg-green-600 text-white text-[10px] font-bold px-2 py-0.5 rounded">${v.category}</span>
+                    </div>
+                    <div class="p-5 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h4 class="font-bold text-stone-900 text-base mb-1">${v.title}</h4>
+                            <p class="text-xs text-stone-500 font-medium mb-4"><i class="fa-solid fa-chalkboard-user mr-1"></i> Tuter: ${v.tutor}</p>
+                        </div>
+                        <button onclick="alert('Starting free lesson: ' + '${v.title}')" class="w-full py-2.5 bg-green-50 hover:bg-green-100 text-green-700 font-bold rounded-xl text-xs transition border border-green-200">
+                            Watch Lesson Free
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterVideos() {
+            const query = document.getElementById('videoSearch').value.toLowerCase();
+            const cat = document.getElementById('videoCategoryFilter').value;
+            const filtered = videos.filter(v => {
+                const matchQuery = v.title.toLowerCase().includes(query) || v.tutor.toLowerCase().includes(query);
+                const matchCat = cat === 'all' || v.category === cat;
+                return matchQuery && matchCat;
+            });
+            renderVideos(filtered);
+        }
+
+        // Render PDFs
+        function renderPdfs(list) {
+            const grid = document.getElementById('pdfGrid');
+            if (!grid) return;
+            grid.innerHTML = list.map(p => `
+                <div class="glass-card rounded-2xl p-6 flex flex-col justify-between hover:shadow-xl transition">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-xl font-bold mb-4">
+                            <i class="fa-solid fa-file-pdf"></i>
+                        </div>
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-amber-800 bg-amber-100 px-2 py-0.5 rounded">${p.subject}</span>
+                        <h4 class="font-bold text-stone-900 text-base mt-2 mb-2">${p.title}</h4>
+                        <p class="text-xs text-stone-500 font-medium mb-4">100% Free Humanitarian E-Book & Guide</p>
+                    </div>
+                    <a href="${p.link}" onclick="alert('Downloading PDF: ' + '${p.title}')" class="w-full py-2.5 bg-amber-50 hover:bg-amber-100 text-amber-800 font-bold rounded-xl text-xs transition border border-amber-200 text-center block">
+                        <i class="fa-solid fa-download mr-1"></i> Download PDF Free
+                    </a>
+                </div>
+            `).join('');
+        }
+
+        function filterPdfs() {
+            const query = document.getElementById('pdfSearch').value.toLowerCase();
+            const filtered = pdfs.filter(p => p.title.toLowerCase().includes(query) || p.subject.toLowerCase().includes(query));
+            renderPdfs(filtered);
+        }
+
+        // Certificate Generator
+        function generateCertificate(e) {
+            e.preventDefault();
+            const name = document.getElementById('certName').value;
+            const course = document.getElementById('certCourse').value;
+            
+            document.getElementById('certRecipientName').innerText = name;
+            document.getElementById('certCourseDisplay').innerText = course;
+            document.getElementById('certIdDisplay').innerText = 'SN-CERT-' + Math.floor(10000 + Math.random() * 90000);
+            document.getElementById('certDateDisplay').innerText = new Date().toISOString().split('T')[0];
+            
+            document.getElementById('certPreviewArea').classList.remove('hidden');
+        }
+
+        // Donation handler
+        function setDonationAmount(amt) {
+            document.getElementById('customDonation').value = amt;
+            document.querySelectorAll('.donation-btn').forEach(btn => {
+                btn.classList.remove('border-2', 'border-green-600', 'bg-green-50', 'text-green-800');
+                btn.classList.add('border', 'border-stone-300', 'text-stone-800');
+            });
+            event.target.classList.remove('border', 'border-stone-300', 'text-stone-800');
+            event.target.classList.add('border-2', 'border-green-600', 'bg-green-50', 'text-green-800');
+        }
+
+        function handleDonation(e) {
+            e.preventDefault();
+            const amount = document.getElementById('customDonation').value;
+            const name = document.getElementById('donorName').value || 'Anonymous Donor';
+            alert(`Thank you so much, ${name}! Your generous donation of $${amount} has been successfully processed to support underprivileged children's education.`);
+            switchTab('home');
+        }
+
+        // Auth Modal Controls
+        function openAuthModal(role) {
+            currentAuthRole = role;
+            document.getElementById('authModalTitle').innerText = role === 'student' ? 'Student Portal' : 'Humanitarian Tutor Portal';
+            document.getElementById('authModal').classList.remove('hidden');
+        }
+
+        function closeAuthModal() {
+            document.getElementById('authModal').classList.add('hidden');
+        }
+
+        function switchAuthMode(mode) {
+            authMode = mode;
+            const regFields = document.getElementById('registerFields');
+            const tabLogin = document.getElementById('authTabLogin');
+            const tabRegister = document.getElementById('authTabRegister');
+            const submitBtn = document.getElementById('authSubmitBtn');
+
+            if (mode === 'register') {
+                regFields.classList.remove('hidden');
+                tabRegister.className = 'flex-1 py-2 text-xs font-bold rounded-lg bg-white shadow-sm text-stone-800 transition';
+                tabLogin.className = 'flex-1 py-2 text-xs font-bold rounded-lg text-stone-500 transition';
+                submitBtn.innerText = 'Register Free Account';
+            } else {
+                regFields.classList.add('hidden');
+                tabLogin.className = 'flex-1 py-2 text-xs font-bold rounded-lg bg-white shadow-sm text-stone-800 transition';
+                tabRegister.className = 'flex-1 py-2 text-xs font-bold rounded-lg text-stone-500 transition';
+                submitBtn.innerText = 'Login to Portal';
+            }
+        }
+
+        function handleAuth(e) {
+            e.preventDefault();
+            const email = document.getElementById('authEmail').value;
+            const name = authMode === 'register' ? document.getElementById('authName').value : (currentAuthRole === 'student' ? 'Rahim Student' : 'Dr. Al Amin');
+            const uniqueId = email.startsWith('SN-') ? email : (currentAuthRole === 'student' ? 'SN-STU-' + Math.floor(10000 + Math.random() * 90000) : 'SN-TTR-' + Math.floor(50000 + Math.random() * 90000));
+
+            currentUser = {
+                name: name,
+                email: email,
+                role: currentAuthRole,
+                uniqueId: uniqueId
+            };
+
+            localStorage.setItem('skillnova_user', JSON.stringify(currentUser));
+            closeAuthModal();
+            checkUserSession();
+            alert(`Welcome, ${currentUser.name}! Your Unique ID is ${currentUser.uniqueId}`);
+        }
+
+        function checkUserSession() {
+            const navArea = document.getElementById('authNavArea');
+            if (currentUser) {
+                if (currentUser.role === 'student') {
+                    navArea.innerHTML = `<button onclick="switchTab('studentDashboard')" class="px-4 py-2 text-sm font-semibold text-green-700 bg-green-50 border border-green-200 rounded-xl hover:bg-green-100 transition shadow-sm"><i class="fa-solid fa-user-graduate mr-1"></i> My Dashboard</button>`;
+                    document.getElementById('stuNameDisplay').innerText = currentUser.name;
+                    document.getElementById('stuIdDisplay').innerText = 'ID: ' + currentUser.uniqueId;
+                    document.getElementById('stuAvatar').innerText = currentUser.name.charAt(0);
+                    switchTab('studentDashboard');
+                } else {
+                    navArea.innerHTML = `<button onclick="switchTab('tutorDashboard')" class="px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-amber-600 to-amber-700 rounded-xl hover:from-amber-700 hover:to-amber-800 transition shadow-md"><i class="fa-solid fa-chalkboard-user mr-1"></i> Tutor Dashboard</button>`;
+                    document.getElementById('ttrNameDisplay').innerText = currentUser.name;
+                    document.getElementById('ttrIdDisplay').innerText = 'ID: ' + currentUser.uniqueId;
+                    document.getElementById('ttrAvatar').innerText = currentUser.name.charAt(0);
+                    switchTab('tutorDashboard');
+                }
+            } else {
+                navArea.innerHTML = `
+                    <button onclick="openAuthModal('student')" class="px-4 py-2 text-sm font-semibold text-green-700 bg-green-50 border border-green-200 rounded-xl hover:bg-green-100 transition shadow-sm">
+                        <i class="fa-solid fa-user-graduate mr-1"></i> Student
+                    </button>
+                    <button onclick="openAuthModal('tutor')" class="px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-green-600 to-emerald-600 rounded-xl hover:from-green-700 hover:to-emerald-700 transition shadow-md shadow-green-600/20">
+                        <i class="fa-solid fa-chalkboard-user mr-1"></i> Tutor
+                    </button>
+                `;
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('skillnova_user');
+            currentUser = null;
+            checkUserSession();
+            switchTab('home');
+            alert('Successfully logged out.');
+        }
+
+        // Tutor publishing
+        function publishVideo(e) {
+            e.preventDefault();
+            const title = document.getElementById('newVideoTitle').value;
+            const category = document.getElementById('newVideoCat').value;
+            const url = document.getElementById('newVideoUrl').value;
+
+            videos.unshift({
+                id: videos.length + 1,
+                title: title,
+                category: category,
+                url: 'https://www.youtube.com/embed/' + url,
+                tutor: currentUser ? currentUser.name : 'Humanitarian Tutor',
+                duration: '20 mins'
+            });
+
+            renderVideos(videos);
+            alert('Video lesson successfully published for all students free of charge!');
+            document.getElementById('newVideoTitle').value = '';
+            document.getElementById('newVideoUrl').value = '';
+            switchTab('explore');
+        }
+
+        function publishPdf(e) {
+            e.preventDefault();
+            const title = document.getElementById('newPdfTitle').value;
+            const subject = document.getElementById('newPdfSub').value;
+            const link = document.getElementById('newPdfLink').value;
+
+            pdfs.unshift({
+                id: pdfs.length + 1,
+                title: title,
+                subject: subject,
+                link: link
+            });
+
+            renderPdfs(pdfs);
+            alert('PDF resource successfully published for free student downloads!');
+            document.getElementById('newPdfTitle').value = '';
+            document.getElementById('newPdfSub').value = '';
+            document.getElementById('newPdfLink').value = '';
+            switchTab('library');
+        }
+
+        // ID Card Modal
+        function openIdCardModal(role) {
+            if (!currentUser) {
+                openAuthModal(role);
+                return;
+            }
+            document.getElementById('idCardRoleBadge').innerText = currentUser.role.toUpperCase();
+            document.getElementById('idCardName').innerText = currentUser.name;
+            document.getElementById('idCardNumber').innerText = currentUser.uniqueId;
+            document.getElementById('idCardAvatar').innerText = currentUser.name.charAt(0);
+            document.getElementById('idCardModal').classList.remove('hidden');
+        }
+
+        function closeIdCardModal() {
+            document.getElementById('idCardModal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
